@@ -1,0 +1,283 @@
+.background-atmosphere {
+  --atmosphere-pointer-x: 0px;
+  --atmosphere-pointer-y: 0px;
+  --atmosphere-grid-x: 0px;
+  --atmosphere-grid-y: 0px;
+  --atmosphere-network-x: 0px;
+  --atmosphere-network-y: 0px;
+  --atmosphere-orbs-x: 0px;
+  --atmosphere-orbs-y: 0px;
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.background-atmosphere__canvas {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 13% 10%, rgba(139, 124, 255, .13), transparent 30%),
+    radial-gradient(circle at 87% 18%, rgba(110, 168, 255, .1), transparent 32%),
+    radial-gradient(circle at 50% 100%, rgba(69, 214, 160, .07), transparent 35%);
+}
+
+.background-atmosphere__wash {
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(ellipse at 32% 42%, rgba(139, 124, 255, .1), transparent 26%),
+    radial-gradient(ellipse at 71% 62%, rgba(110, 168, 255, .08), transparent 27%);
+  filter: blur(24px);
+  transform: translate3d(var(--atmosphere-pointer-x), var(--atmosphere-pointer-y), 0);
+  transition: transform 900ms cubic-bezier(.2, .65, .25, 1);
+}
+
+.background-atmosphere__grid {
+  position: absolute;
+  inset: 0;
+  opacity: .3;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, .72) 45%, transparent 92%);
+  transform: translate3d(var(--atmosphere-grid-x), var(--atmosphere-grid-y), 0);
+  transition: transform 900ms cubic-bezier(.2, .65, .25, 1);
+}
+
+.background-atmosphere__network {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(139, 124, 255, .36);
+  fill: rgba(110, 168, 255, .6);
+  opacity: .48;
+  transform: translate3d(var(--atmosphere-network-x), var(--atmosphere-network-y), 0);
+  transition: transform 900ms cubic-bezier(.2, .65, .25, 1);
+}
+
+.background-atmosphere__network path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1;
+  stroke-dasharray: 1 12;
+}
+
+.background-atmosphere__orbs {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(var(--atmosphere-orbs-x), var(--atmosphere-orbs-y), 0);
+  transition: transform 900ms cubic-bezier(.2, .65, .25, 1);
+}
+
+.background-atmosphere__orb,
+.background-atmosphere__spark {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+}
+
+.background-atmosphere__orb {
+  width: clamp(130px, 18vw, 280px);
+  aspect-ratio: 1;
+  filter: blur(1px);
+  opacity: .48;
+  animation: atmosphere-drift 16s ease-in-out infinite;
+}
+
+.background-atmosphere__orb--violet {
+  top: 10%;
+  left: -5%;
+  background: radial-gradient(circle at 35% 35%, rgba(177, 164, 255, .52), rgba(139, 124, 255, .12) 48%, transparent 72%);
+}
+
+.background-atmosphere__orb--blue {
+  top: 35%;
+  right: -7%;
+  width: clamp(170px, 23vw, 350px);
+  animation-delay: -5s;
+  background: radial-gradient(circle at 48% 42%, rgba(140, 190, 255, .42), rgba(110, 168, 255, .1) 50%, transparent 72%);
+}
+
+.background-atmosphere__orb--green {
+  bottom: -13%;
+  left: 37%;
+  width: clamp(150px, 20vw, 310px);
+  animation-delay: -10s;
+  background: radial-gradient(circle at 50% 35%, rgba(116, 231, 192, .28), rgba(69, 214, 160, .08) 50%, transparent 72%);
+}
+
+.background-atmosphere__spark {
+  width: 4px;
+  height: 4px;
+  background: #d9d4ff;
+  box-shadow: 0 0 18px 4px rgba(139, 124, 255, .7);
+  animation: atmosphere-twinkle 4.5s ease-in-out infinite;
+}
+
+.background-atmosphere__spark--one { top: 18%; left: 47%; }
+.background-atmosphere__spark--two { top: 61%; left: 79%; animation-delay: -1.4s; }
+.background-atmosphere__spark--three { top: 76%; left: 21%; animation-delay: -2.7s; }
+.background-atmosphere__content { position: relative; z-index: 1; }
+
+.route-content { animation: route-content-in .42s cubic-bezier(.2, .75, .25, 1) both; }
+.route-marketplace .background-atmosphere__canvas { background: radial-gradient(circle at 14% 20%, rgba(110, 168, 255, .11), transparent 28%), radial-gradient(circle at 86% 42%, rgba(139, 124, 255, .1), transparent 32%), #08090d; }
+.route-dashboard .background-atmosphere__canvas { background: radial-gradient(circle at 72% 12%, rgba(69, 214, 160, .08), transparent 25%), radial-gradient(circle at 20% 78%, rgba(139, 124, 255, .1), transparent 34%), #08090d; }
+.route-jobs .background-atmosphere__canvas { background: radial-gradient(circle at 80% 18%, rgba(139, 124, 255, .13), transparent 30%), radial-gradient(circle at 20% 72%, rgba(110, 168, 255, .08), transparent 32%), #08090d; }
+.route-create-job .background-atmosphere__canvas { background: radial-gradient(circle at 40% 4%, rgba(139, 124, 255, .12), transparent 30%), radial-gradient(circle at 90% 88%, rgba(69, 214, 160, .06), transparent 30%), #08090d; }
+.route-admin .background-atmosphere__canvas { background: radial-gradient(circle at 84% 15%, rgba(246, 198, 106, .08), transparent 24%), radial-gradient(circle at 16% 88%, rgba(139, 124, 255, .08), transparent 28%), #08090d; }
+
+@keyframes route-content-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+@keyframes atmosphere-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(16px, -12px, 0) scale(1.04); }
+}
+
+@keyframes atmosphere-twinkle {
+  0%, 100% { opacity: .25; transform: scale(.7); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.escrow-mascot {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  width: min(100%, 430px);
+  color: #f5f6fa;
+}
+
+.escrow-mascot__figure {
+  display: grid;
+  flex: 0 0 84px;
+  place-items: end center;
+  min-height: 96px;
+  color: #8b7cff;
+}
+
+.escrow-mascot__avatar {
+  width: 84px;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .24));
+  animation: mascot-float 5.5s ease-in-out infinite;
+}
+
+.escrow-mascot__avatar[data-muted='true'] { animation-play-state: paused; }
+.escrow-mascot__antenna, .escrow-mascot__leg { color: #8b7cff; }
+.escrow-mascot__antenna-tip { fill: #45d6a0; filter: drop-shadow(0 0 5px rgba(69, 214, 160, .8)); }
+.escrow-mascot__backpack { fill: #41465c; stroke: rgba(255, 255, 255, .16); stroke-width: 1; }
+.escrow-mascot__helmet { fill: #202433; stroke: rgba(255, 255, 255, .25); stroke-width: 1.3; }
+.escrow-mascot__visor { fill: #10131c; stroke: rgba(110, 168, 255, .65); stroke-width: 1.2; }
+.escrow-mascot__eye, .escrow-mascot__brow, .escrow-mascot__mouth { fill: #f5f6fa; color: #f5f6fa; stroke: #f5f6fa; }
+.escrow-mascot__body { fill: #8b7cff; stroke: rgba(255, 255, 255, .3); stroke-width: 1.3; }
+.escrow-mascot__badge { fill: #151822; stroke: #d9d4ff; stroke-width: .6; }
+
+.escrow-mascot__bubble {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 13px 14px 14px;
+  border: 1px solid rgba(139, 124, 255, .28);
+  border-radius: 15px 15px 15px 5px;
+  background: linear-gradient(145deg, rgba(39, 42, 56, .94), rgba(16, 18, 25, .92));
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .25), 0 0 32px rgba(139, 124, 255, .08);
+}
+
+.escrow-mascot__bubble::before {
+  position: absolute;
+  bottom: -7px;
+  left: 21px;
+  width: 13px;
+  height: 13px;
+  border-right: 1px solid rgba(139, 124, 255, .28);
+  border-bottom: 1px solid rgba(139, 124, 255, .28);
+  background: #20222f;
+  content: '';
+  transform: skewY(38deg) rotate(14deg);
+}
+
+.escrow-mascot__bubble-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.escrow-mascot__eyebrow { color: #969baa; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .1em; }
+.escrow-mascot__controls { display: flex; gap: 3px; }
+.escrow-mascot__control { display: inline-grid; width: 27px; height: 27px; place-items: center; padding: 0; border: 1px solid transparent; border-radius: 7px; color: #969baa; background: transparent; }
+.escrow-mascot__control:hover { color: #f5f6fa; border-color: rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .07); }
+.escrow-mascot__control:focus-visible { outline: 2px solid #8b7cff; outline-offset: 2px; }
+.escrow-mascot__bubble p { margin: 8px 0 0; color: #f5f6fa; font-size: 12px; line-height: 1.55; }
+
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-5px) rotate(1deg); }
+}
+
+.milestone-celebration {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  width: min(100%, 540px);
+  min-height: 92px;
+  overflow: hidden;
+  padding: 17px 19px;
+  border: 1px solid rgba(69, 214, 160, .3);
+  border-radius: 16px;
+  background: radial-gradient(circle at 84% 12%, rgba(110, 168, 255, .14), transparent 35%), linear-gradient(145deg, rgba(24, 37, 39, .96), rgba(16, 18, 25, .96));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .26), 0 0 34px rgba(69, 214, 160, .08);
+}
+
+.milestone-celebration__sparkles { position: absolute; inset: 0; pointer-events: none; }
+.milestone-celebration__confetti { position: absolute; display: block; width: 7px; height: 7px; opacity: 0; animation: milestone-confetti 2.7s cubic-bezier(.2, .75, .25, 1) forwards; transform: rotate(var(--milestone-rotation)); }
+.milestone-celebration__confetti--pill { width: 5px; height: 12px; border-radius: 99px; }
+.milestone-celebration__confetti--square { border-radius: 2px; }
+.milestone-celebration__star { position: absolute; color: #d9d4ff; font-size: 16px; line-height: 1; opacity: 0; animation: milestone-star 2.2s ease-out forwards; text-shadow: 0 0 14px rgba(139, 124, 255, .85); }
+.milestone-celebration__star--one { top: 17%; left: 24%; animation-delay: 80ms; }
+.milestone-celebration__star--two { right: 17%; top: 25%; font-size: 12px; animation-delay: 320ms; }
+.milestone-celebration__star--three { right: 29%; bottom: 13%; font-size: 10px; animation-delay: 530ms; }
+.milestone-celebration__content { position: relative; z-index: 1; min-width: 0; }
+.milestone-celebration__kicker { display: block; color: #45d6a0; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .12em; }
+.milestone-celebration__content strong { display: block; margin-top: 6px; color: #f5f6fa; font-size: 15px; letter-spacing: -.02em; }
+.milestone-celebration__content p { margin: 5px 0 0; color: #969baa; font-size: 11px; line-height: 1.5; }
+.milestone-celebration__dismiss { position: relative; z-index: 1; flex: 0 0 auto; margin-left: auto; padding: 7px 9px; border: 1px solid rgba(255, 255, 255, .12); border-radius: 8px; color: #969baa; background: rgba(255, 255, 255, .04); font-size: 10px; font-weight: 700; }
+.milestone-celebration__dismiss:hover { color: #f5f6fa; background: rgba(255, 255, 255, .09); }
+.milestone-celebration__dismiss:focus-visible { outline: 2px solid #8b7cff; outline-offset: 2px; }
+
+@keyframes milestone-confetti {
+  0% { opacity: 0; transform: translateY(-8px) rotate(var(--milestone-rotation)) scale(.7); }
+  22% { opacity: 1; }
+  100% { opacity: .72; transform: translateY(11px) rotate(calc(var(--milestone-rotation) + 70deg)) scale(1); }
+}
+
+@keyframes milestone-star {
+  0% { opacity: 0; transform: scale(.3) rotate(-20deg); }
+  35% { opacity: 1; transform: scale(1.1) rotate(8deg); }
+  100% { opacity: .35; transform: scale(.75) rotate(20deg); }
+}
+
+@media (max-width: 520px) {
+  .escrow-mascot { align-items: center; }
+  .escrow-mascot__figure { flex-basis: 68px; min-height: 80px; }
+  .escrow-mascot__avatar { width: 68px; }
+  .milestone-celebration { align-items: flex-start; gap: 12px; }
+  .milestone-celebration__dismiss { padding-inline: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .background-atmosphere__wash,
+  .background-atmosphere__grid,
+  .background-atmosphere__network,
+  .background-atmosphere__orbs { transform: none !important; transition: none !important; }
+  .background-atmosphere__orb,
+  .background-atmosphere__spark,
+  .escrow-mascot__avatar,
+  .milestone-celebration__confetti,
+  .milestone-celebration__star { animation: none !important; }
+  .milestone-celebration__confetti { opacity: .68; }
+  .milestone-celebration__star { opacity: .5; }
+  .route-content { animation: none !important; }
+}
